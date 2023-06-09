@@ -7,7 +7,14 @@
   "database": "employees",
   "synchronize": true,
   "logging": true,
-  "entities": ["src/models/dummy.js"],
+  "entities": [
+    "src/models/Employee.js",
+    "src/models/Salary.js",
+    "src/models/DeptManager.js",
+    "src/models/DeptEmployee.js",
+    "src/models/Department.js",
+    "src/models/Title.js"
+  ],
   "migrations": ["src/database/migrations/*.js"],
   "cli": {
     "migrationsDir": "src/database/migrations"

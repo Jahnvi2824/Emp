@@ -1,10 +1,11 @@
 const { EntityManager } = require("typeorm");
 const Employee = require("../models/Employee");
+const AppDataSource = require("../../connection1");
 
 // Get all employees
 const getAllEmployees = async (req, res) => {
   try {
-    const employeeRepository = EntityManager().getRepository(Employee);
+    const employeeRepository = AppDataSource.getRepository(Employee);
     const employees = await employeeRepository.find();
     res.json(employees);
   } catch (error) {
@@ -31,33 +32,36 @@ const getEmployeeByEmpNo = async (req, res) => {
 
 // Create a new employee
 const createEmployee = async (req, res) => {
+  console.log("post request");
   try {
-    const { empNo, birthDate, firstName, lastName, gender, hireDate } =
+    // res.json({ body: req.body });
+    console.log("what");
+    const { emp_no, birth_date, first_name, last_name, gender, hire_date } =
       req.body;
-
-    const employeeRepository = EntityManager().getRepository(Employee);
-
+    console.log(req.body);
+    const employeeRepository = await AppDataSource.getRepository(Employee);
+    // console.log(empNo);
     // Check if employee with the same empNo already exists
-    const existingEmployee = await employeeRepository.findOne(empNo);
-    if (existingEmployee) {
-      return res
-        .status(400)
-        .json({ error: "Employee with the same empNo already exists" });
-    }
-
+    // const existingEmployee = await employeeRepository.findOne(empNo);
+    // if (existingEmployee) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "Employee with the same empNo already exists" });
+    // }
+    // console.log(empNo + " " + gender);
     const newEmployee = employeeRepository.create({
-      emp_no: empNo,
-      birth_date: birthDate,
-      first_name: firstName,
-      last_name: lastName,
+      emp_no: emp_no,
+      birth_date: birth_date,
+      first_name: first_name,
+      last_name: last_name,
       gender: gender,
-      hire_date: hireDate,
+      hire_date: hire_date,
     });
-
+    console.log(newEmployee);
     await employeeRepository.save(newEmployee);
     res.status(201).json({ message: "Employee created successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error });
   }
 };
 

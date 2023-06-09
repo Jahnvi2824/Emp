@@ -22,10 +22,30 @@ const AppDataSource = new DataSource({
   },
 });
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log("Connected to db");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+module.exports = AppDataSource;
+
+// const { createConnection } = require("typeorm");
+// // ...
+
+// const AppConnection = createConnection({
+//   type: "postgres",
+//   host: "localhost",
+//   port: 5432,
+//   username: "postgres",
+//   password: "Jahnvi@28",
+//   database: "employees",
+//   synchronize: true,
+//   logging: true,
+//   entities: [Employee, Salary, DeptManager, DeptEmployee, Department, Title],
+//   extra: {
+//     trustServerCertificate: true,
+//   },
+// });
+
+// AppConnection
+//   .then(() => {
+//     console.log("Connected to db");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
